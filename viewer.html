@@ -215,8 +215,8 @@
                 0.1,
                 1000
             );
-            camera.position.set(8, 12, 8);
-            camera.lookAt(4.5, 0, 5);
+            camera.position.set(4, 18, 12);
+            camera.lookAt(3.9, 0, 7.6);
 
             // Setup renderer
             renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -272,14 +272,14 @@
 
         function buildApartment() {
             // Build floor
-            const floorGeometry = new THREE.PlaneGeometry(12, 12);
+            const floorGeometry = new THREE.PlaneGeometry(18, 25);
             const floorMaterial = new THREE.MeshLambertMaterial({
                 color: 0xcccccc,
                 side: THREE.DoubleSide
             });
             const floor = new THREE.Mesh(floorGeometry, floorMaterial);
             floor.rotation.x = -Math.PI / 2;
-            floor.position.set(4.5, 0, 5);
+            floor.position.set(3.9, -0.01, 7.6);
             floor.receiveShadow = true;
             scene.add(floor);
 
@@ -291,8 +291,11 @@
             // Build walls
             buildWalls();
 
+            // Build fixtures
+            buildFixtures();
+
             // Add grid helper
-            const gridHelper = new THREE.GridHelper(20, 20, 0x888888, 0xcccccc);
+            const gridHelper = new THREE.GridHelper(25, 25, 0x888888, 0xcccccc);
             gridHelper.position.y = 0;
             scene.add(gridHelper);
         }
@@ -421,17 +424,58 @@
             });
 
             // Add windows
-            apartmentData.windows.forEach(window => {
-                const windowGeometry = new THREE.BoxGeometry(window.width, window.height, 0.05);
+            apartmentData.windows.forEach(windowData => {
+                const windowGeometry = new THREE.BoxGeometry(
+                    windowData.wall === 'west' || windowData.wall === 'east' ? 0.05 : windowData.width,
+                    windowData.height,
+                    windowData.wall === 'north' || windowData.wall === 'south' ? 0.05 : windowData.width
+                );
                 const windowMaterial = new THREE.MeshPhongMaterial({
                     color: 0x88ccff,
                     transparent: true,
-                    opacity: 0.3,
+                    opacity: 0.4,
                     shininess: 100
                 });
                 const windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
-                windowMesh.position.set(window.position[0], 1.5, window.position[1]);
+                windowMesh.position.set(windowData.position[0], 1.5, windowData.position[1]);
                 scene.add(windowMesh);
+            });
+        }
+
+        function buildFixtures() {
+            if (!apartmentData.fixtures) return;
+
+            const fixtureColors = {
+                'kitchen_counter': 0x8B4513,
+                'stove': 0x333333,
+                'sink': 0xCCCCCC,
+                'bathroom_sink': 0xFFFFFF,
+                'toilet': 0xFFFFFF,
+                'shower': 0xE0E0E0,
+                'washing_machine': 0xEEEEEE,
+                'refrigerator': 0xF5F5F5,
+                'dishwasher': 0xC0C0C0
+            };
+
+            apartmentData.fixtures.forEach(fixture => {
+                const size = fixture.size || [0.6, 0.6];
+                const height = fixture.type === 'shower' ? 2.0 :
+                              fixture.type === 'toilet' || fixture.type === 'sink' || fixture.type === 'bathroom_sink' ? 0.8 : 0.9;
+
+                const geometry = new THREE.BoxGeometry(size[0], height, size[1]);
+                const color = fixtureColors[fixture.type] || 0x888888;
+                const material = new THREE.MeshLambertMaterial({ color: color });
+
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.set(
+                    fixture.position[0],
+                    height / 2,
+                    fixture.position[1]
+                );
+                mesh.castShadow = true;
+                mesh.receiveShadow = true;
+                fixtureMeshes.push(mesh);
+                scene.add(mesh);
             });
         }
 
@@ -481,19 +525,19 @@
 
         // Global functions for controls
         window.resetCamera = function() {
-            camera.position.set(8, 12, 8);
-            controls.target.set(4.5, 0, 5);
+            camera.position.set(4, 18, 12);
+            controls.target.set(3.9, 0, 7.6);
             controls.update();
             isTopView = false;
         };
 
         window.toggleView = function() {
             if (!isTopView) {
-                camera.position.set(4.5, 15, 5);
-                controls.target.set(4.5, 0, 5);
+                camera.position.set(3.9, 22, 7.6);
+                controls.target.set(3.9, 0, 7.6);
             } else {
-                camera.position.set(8, 12, 8);
-                controls.target.set(4.5, 0, 5);
+                camera.position.set(4, 18, 12);
+                controls.target.set(3.9, 0, 7.6);
             }
             controls.update();
             isTopView = !isTopView;
