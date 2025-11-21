@@ -82,10 +82,50 @@ blender gltf/apartment.gltf
 - **Use:** Web applications, AR/VR, mobile apps
 - **Open with:** Web browsers (Three.js), Blender
 
+## 🎨 Import to Blender
+
+Both OBJ and glTF formats work perfectly with Blender!
+
+### Quick Start (5 minutes)
+See **BLENDER_QUICKSTART.md** in the project root for fastest setup.
+
+### Automated Import (Recommended)
+```bash
+# 1. Open Blender
+# 2. Switch to "Scripting" workspace
+# 3. Open: scripts/blender_import.py
+# 4. Update BASE_PATH to your project folder
+# 5. Press Alt+P to run
+# Done! Scene is fully set up with materials, lighting, cameras
+```
+
+### Manual Import
+```bash
+# Import OBJ
+File → Import → Wavefront (.obj)
+Navigate to: output/obj/apartment.obj
+
+# Import glTF
+File → Import → glTF 2.0
+Navigate to: output/gltf/apartment.gltf
+```
+
+**What you get:**
+- ✅ Walls, floors, ceiling with proper materials
+- ✅ Professional lighting setup
+- ✅ Multiple camera angles
+- ✅ Organized collections
+- ✅ Ready to add furniture and customize
+
+**Learn more:**
+- **BLENDER_QUICKSTART.md** - 5-minute setup guide
+- **BLENDER_GUIDE.md** - Complete tutorial with interior design workflow
+
 ## Use Cases by Format
 
 | Need | Recommended Format |
 |------|-------------------|
+| **Interior design in Blender** | **OBJ or glTF + blender_import.py** |
 | Print floor plan | SVG |
 | Design in SketchUp | OBJ |
 | Build web viewer | glTF |
