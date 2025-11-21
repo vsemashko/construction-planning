@@ -1,0 +1,97 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "Python glTF Generator",
+    "copyright": "Apartment E.1.5.47"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Apartment E.1.5.47",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Apartment",
+      "mesh": 0
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Apartment Geometry",
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 0
+          },
+          "indices": 1,
+          "material": 0
+        }
+      ]
+    }
+  ],
+  "materials": [
+    {
+      "name": "Apartment Material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.9,
+          0.9,
+          0.9,
+          1.0
+        ],
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.8
+      }
+    }
+  ],
+  "accessors": [
+    {
+      "bufferView": 0,
+      "byteOffset": 0,
+      "componentType": 5126,
+      "count": 48,
+      "type": "VEC3",
+      "min": [
+        -0.125,
+        -0.2,
+        -0.125
+      ],
+      "max": [
+        6.625,
+        2.8000000000000003,
+        14.125
+      ]
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 0,
+      "componentType": 5123,
+      "count": 216,
+      "type": "SCALAR"
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 576,
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 576,
+      "byteLength": 432,
+      "target": 34963
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 1008,
+      "uri": "data:application/octet-stream;base64,AAAAAM3MTL4AAAAAAADQQM3MTL4AAAAAAADQQM3MTL4AAGBBAAAAAM3MTL4AAGBBAAAAAAAAAAAAAAAAAADQQAAAAAAAAAAAAADQQAAAAAAAAGBBAAAAAAAAAAAAAGBBAAAAAAAAAAAAAAC+AADQQAAAAAAAAAC+AADQQAAAAAAAAAA+AAAAAAAAAAAAAAA+AAAAAGZmJkAAAAC+AADQQGZmJkAAAAC+AADQQGZmJkAAAAA+AAAAAGZmJkAAAAA+AADMQAAAAAAAAAAAAADUQAAAAAAAAAAAAADUQAAAAAAAAGBBAADMQAAAAAAAAGBBAADMQGZmJkAAAAAAAADUQGZmJkAAAAAAAADUQGZmJkAAAGBBAADMQGZmJkAAAGBBAAAAAAAAAAAAAF5BAADQQAAAAAAAAF5BAADQQAAAAAAAAGJBAAAAAAAAAAAAAGJBAAAAAGZmJkAAAF5BAADQQGZmJkAAAF5BAADQQGZmJkAAAGJBAAAAAGZmJkAAAGJBAAAAvgAAAAAAAAAAAAAAPgAAAAAAAAAAAAAAPgAAAAAAAGBBAAAAvgAAAAAAAGBBAAAAvmZmJkAAAAAAAAAAPmZmJkAAAAAAAAAAPmZmJkAAAGBBAAAAvmZmJkAAAGBBAAAAAGZmJkAAAAAAAADQQGZmJkAAAAAAAADQQGZmJkAAAGBBAAAAAGZmJkAAAGBBAAAAADMzM0AAAAAAAADQQDMzM0AAAAAAAADQQDMzM0AAAGBBAAAAADMzM0AAAGBBAAABAAIAAAACAAMABAAGAAUABAAHAAYAAAAFAAEAAAAEAAUAAgAHAAMAAgAGAAcAAAAHAAQAAAADAAcAAQAGAAIAAQAFAAYACAAJAAoACAAKAAsADAAOAA0ADAAPAA4ACAANAAkACAAMAA0ACgAPAAsACgAOAA8ACAAPAAwACAALAA8ACQAOAAoACQANAA4AEAARABIAEAASABMAFAAWABUAFAAXABYAEAAVABEAEAAUABUAEgAXABMAEgAWABcAEAAXABQAEAATABcAEQAWABIAEQAVABYAGAAZABoAGAAaABsAHAAeAB0AHAAfAB4AGAAdABkAGAAcAB0AGgAfABsAGgAeAB8AGAAfABwAGAAbAB8AGQAeABoAGQAdAB4AIAAhACIAIAAiACMAJAAmACUAJAAnACYAIAAlACEAIAAkACUAIgAnACMAIgAmACcAIAAnACQAIAAjACcAIQAmACIAIQAlACYAKAApACoAKAAqACsALAAuAC0ALAAvAC4AKAAtACkAKAAsAC0AKgAvACsAKgAuAC8AKAAvACwAKAArAC8AKQAuACoAKQAtAC4A"
+    }
+  ]
+}

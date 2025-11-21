@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="425" height="800" xmlns="http://www.w3.org/2000/svg">
+  <title>Apartment E.1.5.47 - Floor Plan</title>
+  <desc>2D Floor plan generated from architectural documents</desc>
+  <defs>
+    <style>
+      .wall { fill: #333; stroke: #000; stroke-width: 1; }
+      .window { fill: #87CEEB; stroke: #000; stroke-width: 1; }
+      .door { fill: #D2691E; stroke: #000; stroke-width: 1; }
+      .room-label { font-family: Arial, sans-serif; font-size: 12px; fill: #333; text-anchor: middle; }
+      .room-area { font-family: Arial, sans-serif; font-size: 10px; fill: #666; text-anchor: middle; }
+      .floor { fill: #f5f5f5; stroke: #ccc; stroke-width: 1; }
+    </style>
+  </defs>
+  <rect width="425" height="800" fill="#fff"/>
+  <g id="grid" opacity="0.2">
+    <line x1="50" y1="50" x2="50" y2="750" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="100" y1="50" x2="100" y2="750" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="150" y1="50" x2="150" y2="750" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="200" y1="50" x2="200" y2="750" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="250" y1="50" x2="250" y2="750" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="300" y1="50" x2="300" y2="750" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="350" y1="50" x2="350" y2="750" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="50" x2="375" y2="50" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="100" x2="375" y2="100" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="150" x2="375" y2="150" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="200" x2="375" y2="200" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="250" x2="375" y2="250" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="300" x2="375" y2="300" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="350" x2="375" y2="350" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="400" x2="375" y2="400" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="450" x2="375" y2="450" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="500" x2="375" y2="500" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="550" x2="375" y2="550" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="600" x2="375" y2="600" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="650" x2="375" y2="650" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="700" x2="375" y2="700" stroke="#ccc" stroke-width="0.5"/>
+    <line x1="50" y1="750" x2="375" y2="750" stroke="#ccc" stroke-width="0.5"/>
+  </g>
+  <g id="walls">
+    <rect x="50" y="43.75" width="325.0" height="12.5" class="wall"/>
+    <rect x="368.75" y="50" width="12.5" height="700.0" class="wall"/>
+    <rect x="50" y="743.75" width="325.0" height="12.5" class="wall"/>
+    <rect x="43.75" y="50" width="12.5" height="700.0" class="wall"/>
+  </g>
+  <g id="room-labels">
+    <text x="212.5" y="600.0" class="room-label">Living Room with Kitchenette</text>
+    <text x="212.5" y="615.0" class="room-area">27.44 m²</text>
+    <text x="212.5" y="175.0" class="room-label">Room</text>
+    <text x="212.5" y="190.0" class="room-area">10.48 m²</text>
+    <text x="125.0" y="325.0" class="room-label">Room</text>
+    <text x="125.0" y="340.0" class="room-area">7.95 m²</text>
+    <text x="125.0" y="425.0" class="room-label">Room</text>
+    <text x="125.0" y="440.0" class="room-area">7.94 m²</text>
+    <text x="300.0" y="300.0" class="room-label">Bathroom</text>
+    <text x="300.0" y="315.0" class="room-area">5.42 m²</text>
+    <text x="300.0" y="200.0" class="room-label">WC</text>
+    <text x="300.0" y="215.0" class="room-area">1.62 m²</text>
+    <text x="212.5" y="325.0" class="room-label">Hall</text>
+    <text x="212.5" y="340.0" class="room-area">6.61 m²</text>
+    <text x="300.0" y="425.0" class="room-label">Hall</text>
+    <text x="300.0" y="440.0" class="room-area">4.47 m²</text>
+  </g>
+  <g id="info">
+    <text x="10" y="20" style="font-family: Arial; font-size: 14px; font-weight: bold;">Apartment E.1.5.47</text>
+    <text x="10" y="35" style="font-family: Arial; font-size: 11px;">Total Area: 73.97 m²</text>
+    <text x="415" y="20" style="font-family: Arial; font-size: 10px; text-anchor: end;">Scale: 1:200cm</text>
+  </g>
+</svg>

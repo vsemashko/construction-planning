@@ -1,0 +1,293 @@
+{
+  "apartment": {
+    "metadata": {
+      "id": "E.1.5.47",
+      "building": "SOHO 12",
+      "floor": 5,
+      "totalUsableArea": 73.97,
+      "partitionWallsArea": 2.04,
+      "developer": "Yawa Sp. z o.o. 4 Sp. k.",
+      "architect": "HRA Architekci Sp. z o.o. Sp.k",
+      "location": "ul. Mińska / ul. Żupnicza, Warsaw",
+      "date": "2024-05-10"
+    },
+    "dimensions": {
+      "ceilingHeight": 2.60,
+      "approximateWidth": 6.5,
+      "approximateDepth": 14.0
+    },
+    "rooms": [
+      {
+        "id": "E.1.5.47.1",
+        "number": 1,
+        "name": "Pokój z aneksem",
+        "nameEn": "Living Room with Kitchenette",
+        "area": 27.44,
+        "temperature": 20,
+        "type": "living"
+      },
+      {
+        "id": "E.1.5.47.2",
+        "number": 2,
+        "name": "Pokój",
+        "nameEn": "Room",
+        "area": 10.48,
+        "temperature": 20,
+        "type": "bedroom"
+      },
+      {
+        "id": "E.1.5.47.3",
+        "number": 3,
+        "name": "Pokój",
+        "nameEn": "Room",
+        "area": 7.95,
+        "temperature": 20,
+        "type": "bedroom"
+      },
+      {
+        "id": "E.1.5.47.4",
+        "number": 4,
+        "name": "Pokój",
+        "nameEn": "Room",
+        "area": 7.94,
+        "temperature": 20,
+        "type": "bedroom"
+      },
+      {
+        "id": "E.1.5.47.5",
+        "number": 5,
+        "name": "Łazienka",
+        "nameEn": "Bathroom",
+        "area": 5.42,
+        "temperature": 24,
+        "type": "bathroom"
+      },
+      {
+        "id": "E.1.5.47.6",
+        "number": 6,
+        "name": "WC",
+        "nameEn": "WC",
+        "area": 1.62,
+        "temperature": 20,
+        "type": "wc"
+      },
+      {
+        "id": "E.1.5.47.7",
+        "number": 7,
+        "name": "Hol",
+        "nameEn": "Hall",
+        "area": 6.61,
+        "temperature": 20,
+        "type": "hallway"
+      },
+      {
+        "id": "E.1.5.47.8",
+        "number": 8,
+        "name": "Hol",
+        "nameEn": "Hall",
+        "area": 4.47,
+        "temperature": 20,
+        "type": "hallway"
+      },
+      {
+        "id": "E.1.5.47.9",
+        "number": 9,
+        "name": "Balkon",
+        "nameEn": "Balcony",
+        "area": 9.99,
+        "type": "balcony"
+      }
+    ],
+    "walls": [
+      {
+        "id": "W01",
+        "type": "load_bearing",
+        "start": {"x": 0, "y": 0, "z": 0},
+        "end": {"x": 6.5, "y": 0, "z": 0},
+        "thickness": 0.25,
+        "height": 2.60
+      },
+      {
+        "id": "W02",
+        "type": "load_bearing",
+        "start": {"x": 6.5, "y": 0, "z": 0},
+        "end": {"x": 6.5, "y": 14.0, "z": 0},
+        "thickness": 0.25,
+        "height": 2.60
+      },
+      {
+        "id": "W03",
+        "type": "load_bearing",
+        "start": {"x": 6.5, "y": 14.0, "z": 0},
+        "end": {"x": 0, "y": 14.0, "z": 0},
+        "thickness": 0.25,
+        "height": 2.60
+      },
+      {
+        "id": "W04",
+        "type": "load_bearing",
+        "start": {"x": 0, "y": 14.0, "z": 0},
+        "end": {"x": 0, "y": 0, "z": 0},
+        "thickness": 0.25,
+        "height": 2.60
+      }
+    ],
+    "windows": [
+      {
+        "id": "E01",
+        "type": "E01",
+        "room": "E.1.5.47.1",
+        "width": 1.70,
+        "height": 2.01,
+        "sillHeight": 0.50,
+        "direction": "L",
+        "acoustic": "28dB"
+      },
+      {
+        "id": "E02",
+        "type": "E02",
+        "room": "E.1.5.47.2",
+        "width": 1.10,
+        "height": 2.01,
+        "sillHeight": 0.50,
+        "direction": "P",
+        "acoustic": "28dB"
+      },
+      {
+        "id": "E02b",
+        "type": "E02",
+        "room": "E.1.5.47.5",
+        "width": 1.10,
+        "height": 2.01,
+        "sillHeight": 0.50,
+        "direction": "L",
+        "acoustic": "28dB"
+      },
+      {
+        "id": "E03",
+        "type": "E03",
+        "room": "E.1.5.47.1",
+        "width": 2.00,
+        "height": 2.59,
+        "sillHeight": 0,
+        "direction": "L",
+        "acoustic": "28dB",
+        "note": "Balcony door"
+      },
+      {
+        "id": "E05",
+        "type": "E05",
+        "room": "E.1.5.47.3",
+        "width": 1.10,
+        "height": 1.61,
+        "sillHeight": 0.90,
+        "direction": "L",
+        "acoustic": "28dB"
+      }
+    ],
+    "heating": {
+      "radiators": [
+        {
+          "id": "605E1.01",
+          "room": "E.1.5.47.1",
+          "type": "CN-33KV-90",
+          "power": 3080,
+          "parts": [
+            {"model": "CN-33KV-90", "length": 0.80, "power": 1848, "setting": 4.5},
+            {"model": "CN-33KV-60", "length": 0.72, "power": 1232, "setting": 2.5}
+          ]
+        },
+        {
+          "id": "605E1.02",
+          "room": "E.1.5.47.2",
+          "type": "CN-22KV2-30",
+          "length": 0.92,
+          "power": 640,
+          "setting": 5
+        },
+        {
+          "id": "605E1.03",
+          "room": "E.1.5.47.8",
+          "type": "GŁ-60/140",
+          "length": 0.60,
+          "power": 571
+        },
+        {
+          "id": "605E1.04",
+          "room": "E.1.5.47.3",
+          "type": "CN-22KV2-30",
+          "length": 0.60,
+          "power": 404,
+          "setting": 3.5
+        },
+        {
+          "id": "605E1.05",
+          "room": "E.1.5.47.4",
+          "type": "CN-22KV2-30",
+          "length": 0.60,
+          "power": 403,
+          "setting": 3.5
+        },
+        {
+          "id": "605E1.06",
+          "room": "E.1.5.47.6",
+          "power": 0,
+          "note": "No heating required"
+        }
+      ],
+      "system": {
+        "type": "Central heating",
+        "pipeDiameters": ["dn 16x2.2", "dn 20x2.8", "dn 25x2.5"]
+      }
+    },
+    "electrical": {
+      "panels": {
+        "TSM": {
+          "type": "Surface-mounted",
+          "size": "39 x 50 x 9.9 cm"
+        },
+        "TM": {
+          "type": "Surface-mounted",
+          "size": "25.6 x 32.6 x 9.6 cm"
+        }
+      },
+      "outlets": {
+        "standard_230V": "Multiple 230V 16A outlets throughout",
+        "kitchen": {
+          "dishwasher": "230V 16A/Z IP44",
+          "refrigerator": "230V 16A/Z IP44",
+          "range_hood": "230V for kitchen hood",
+          "electric_stove": "400V connection"
+        },
+        "bathroom": {
+          "washing_machine": "230V 16A/Z IP44"
+        }
+      },
+      "communication": {
+        "video_intercom": true,
+        "telecom_box": true,
+        "data_outlets_RJ45": "Multiple locations",
+        "tv_sat_outlets": "Multiple locations"
+      }
+    },
+    "plumbing": {
+      "bathroom": {
+        "fixtures": ["bathtub/shower", "sink", "toilet"],
+        "connections": ["hot_water", "cold_water", "drain"]
+      },
+      "wc": {
+        "fixtures": ["toilet"],
+        "connections": ["cold_water", "drain"]
+      },
+      "kitchen": {
+        "fixtures": ["sink"],
+        "connections": ["hot_water", "cold_water", "drain", "dishwasher_connection"]
+      }
+    },
+    "ventilation": {
+      "system": "Mechanical",
+      "inlets": ["Wall vents in bedrooms", "Window vents"],
+      "exhausts": ["Bathroom", "WC", "Kitchen hood"]
+    }
+  }
+}
