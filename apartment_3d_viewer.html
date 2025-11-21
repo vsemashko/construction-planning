@@ -1,9 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apartment E.1.5.47 - 3D Viewer</title>
+    <!-- Simple favicon to avoid 404 errors -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏢</text></svg>">
     <style>
         * {
             margin: 0;
@@ -542,26 +545,6 @@
         document.getElementById('toggleRotate').addEventListener('change', (e) => {
             autoRotate = e.target.checked;
         });
-
-        // Add some ambient particles for visual interest
-        const particleGeometry = new THREE.BufferGeometry();
-        const particleCount = 200;
-        const positions = new Float32Array(particleCount * 3);
-
-        for (let i = 0; i < particleCount * 3; i++) {
-            positions[i] = (Math.random() - 0.5) * 50;
-        }
-
-        particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-        const particleMaterial = new THREE.PointsMaterial({
-            color: 0x4fc3f7,
-            size: 0.05,
-            transparent: true,
-            opacity: 0.3
-        });
-
-        const particles = new THREE.Points(particleGeometry, particleMaterial);
-        scene.add(particles);
 
         // Animation loop
         function animate() {
