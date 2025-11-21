@@ -357,44 +357,16 @@
 
         function buildWalls() {
             const wallHeight = apartmentData.ceilingHeight;
-            const wallThickness = 0.15;
 
-            // Build interior walls based on room boundaries
-            apartmentData.rooms.forEach(room => {
-                if (room.vertices.length < 2) return;
-
-                for (let i = 0; i < room.vertices.length; i++) {
-                    const v1 = room.vertices[i];
-                    const v2 = room.vertices[(i + 1) % room.vertices.length];
-
-                    const dx = v2[0] - v1[0];
-                    const dy = v2[1] - v1[1];
-                    const length = Math.sqrt(dx * dx + dy * dy);
-                    const angle = Math.atan2(dy, dx);
-
-                    const wallGeometry = new THREE.BoxGeometry(length, wallHeight, wallThickness);
-                    const wallMaterial = new THREE.MeshLambertMaterial({
-                        color: 0xdddddd,
-                        transparent: true,
-                        opacity: 0.9
-                    });
-
-                    const wall = new THREE.Mesh(wallGeometry, wallMaterial);
-                    wall.position.set(
-                        v1[0] + dx / 2,
-                        wallHeight / 2,
-                        v1[1] + dy / 2
-                    );
-                    wall.rotation.y = -angle;
-                    wall.castShadow = true;
-                    wall.receiveShadow = true;
-                    wallMeshes.push(wall);
-                    scene.add(wall);
-                }
-            });
-
-            // Build exterior walls
+            // Build all walls from explicit wall data
             apartmentData.walls.forEach(wallData => {
+                const isExterior = wallData.type === 'exterior';
+                const wallMaterial = new THREE.MeshLambertMaterial({
+                    color: isExterior ? 0x999999 : 0xdddddd,
+                    transparent: !isExterior,
+                    opacity: isExterior ? 1.0 : 0.9
+                });
+
                 wallData.segments.forEach(segment => {
                     const start = segment.start;
                     const end = segment.end;
@@ -402,12 +374,12 @@
                     const dx = end[0] - start[0];
                     const dy = end[1] - start[1];
                     const length = Math.sqrt(dx * dx + dy * dy);
+
+                    if (length < 0.01) return; // Skip very short segments
+
                     const angle = Math.atan2(dy, dx);
 
                     const wallGeometry = new THREE.BoxGeometry(length, wallHeight, wallData.thickness);
-                    const wallMaterial = new THREE.MeshLambertMaterial({
-                        color: 0x999999
-                    });
 
                     const wall = new THREE.Mesh(wallGeometry, wallMaterial);
                     wall.position.set(
