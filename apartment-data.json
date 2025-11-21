@@ -1,0 +1,121 @@
+{
+  "apartmentId": "E.1.5.47",
+  "floor": 5,
+  "totalArea": 79.32,
+  "ceilingHeight": 2.8,
+  "rooms": [
+    {
+      "id": "E.1.5.47.1",
+      "name": "Living Room / Salon",
+      "area": 27.44,
+      "type": "living",
+      "vertices": [
+        [0, 0], [8.5, 0], [8.5, 3.2], [0, 3.2]
+      ]
+    },
+    {
+      "id": "E.1.5.47.2",
+      "name": "Bedroom 1",
+      "area": 10.48,
+      "type": "bedroom",
+      "vertices": [
+        [0, 3.4], [3.5, 3.4], [3.5, 6.4], [0, 6.4]
+      ]
+    },
+    {
+      "id": "E.1.5.47.3",
+      "name": "Bedroom 2",
+      "area": 7.95,
+      "type": "bedroom",
+      "vertices": [
+        [3.7, 3.4], [6.2, 3.4], [6.2, 6.4], [3.7, 6.4]
+      ]
+    },
+    {
+      "id": "E.1.5.47.4",
+      "name": "Bedroom 3",
+      "area": 7.94,
+      "type": "bedroom",
+      "vertices": [
+        [6.4, 3.4], [9.0, 3.4], [9.0, 6.4], [6.4, 6.4]
+      ]
+    },
+    {
+      "id": "E.1.5.47.5",
+      "name": "Hall",
+      "area": 5.42,
+      "type": "corridor",
+      "vertices": [
+        [0, 6.6], [3.5, 6.6], [3.5, 8.2], [0, 8.2]
+      ]
+    },
+    {
+      "id": "E.1.5.47.6",
+      "name": "Bathroom",
+      "area": 1.62,
+      "type": "bathroom",
+      "vertices": [
+        [3.7, 6.6], [5.0, 6.6], [5.0, 7.9], [3.7, 7.9]
+      ]
+    },
+    {
+      "id": "E.1.5.47.7",
+      "name": "Corridor",
+      "area": 6.61,
+      "type": "corridor",
+      "vertices": [
+        [5.2, 6.6], [9.0, 6.6], [9.0, 8.5], [5.2, 8.5]
+      ]
+    },
+    {
+      "id": "E.1.5.47.8",
+      "name": "Kitchen",
+      "area": 4.47,
+      "type": "kitchen",
+      "vertices": [
+        [0, 8.4], [2.8, 8.4], [2.8, 10.0], [0, 10.0]
+      ]
+    },
+    {
+      "id": "E.1.5.47.9",
+      "name": "Balcony",
+      "area": 9.99,
+      "type": "balcony",
+      "vertices": [
+        [3.0, 8.4], [9.0, 8.4], [9.0, 10.0], [3.0, 10.0]
+      ]
+    }
+  ],
+  "walls": [
+    {
+      "type": "exterior",
+      "thickness": 0.25,
+      "segments": [
+        {"start": [0, 0], "end": [9.0, 0]},
+        {"start": [9.0, 0], "end": [9.0, 10.0]},
+        {"start": [9.0, 10.0], "end": [0, 10.0]},
+        {"start": [0, 10.0], "end": [0, 0]}
+      ]
+    }
+  ],
+  "doors": [
+    {"position": [1.5, 6.4], "width": 0.9, "direction": "horizontal"},
+    {"position": [2.0, 3.2], "width": 0.9, "direction": "horizontal"},
+    {"position": [5.0, 3.2], "width": 0.9, "direction": "horizontal"},
+    {"position": [7.5, 3.2], "width": 0.9, "direction": "horizontal"},
+    {"position": [4.3, 6.6], "width": 0.8, "direction": "horizontal"},
+    {"position": [1.5, 8.2], "width": 0.9, "direction": "horizontal"}
+  ],
+  "windows": [
+    {"position": [4.5, 0], "width": 2.5, "height": 1.5},
+    {"position": [1.7, 6.4], "width": 1.2, "height": 1.5},
+    {"position": [5.0, 6.4], "width": 1.2, "height": 1.5},
+    {"position": [7.7, 6.4], "width": 1.2, "height": 1.5},
+    {"position": [6.0, 10.0], "width": 4.0, "height": 2.0}
+  ],
+  "fixtures": [
+    {"type": "kitchen_counter", "room": "E.1.5.47.8", "position": [0.5, 8.7]},
+    {"type": "bathroom_sink", "room": "E.1.5.47.6", "position": [4.3, 7.2]},
+    {"type": "toilet", "room": "E.1.5.47.6", "position": [4.5, 7.5]}
+  ]
+}

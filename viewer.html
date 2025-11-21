@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apartment 3D Viewer - E.1.5.47</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        #container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+        }
+        #info-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 300px;
+            backdrop-filter: blur(10px);
+        }
+        #info-panel h1 {
+            margin: 0 0 10px 0;
+            font-size: 22px;
+            color: #333;
+        }
+        #info-panel p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .room-list {
+            margin-top: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+        }
+        .room-item {
+            padding: 8px;
+            margin: 5px 0;
+            background: #f5f5f5;
+            border-radius: 6px;
+            font-size: 13px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .room-item:hover {
+            background: #e0e0e0;
+            transform: translateX(5px);
+        }
+        .room-item .room-name {
+            font-weight: 600;
+            color: #333;
+        }
+        .room-item .room-area {
+            color: #666;
+            font-size: 12px;
+        }
+        .room-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        #controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        .control-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            margin: 5px 0;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .control-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+        .toggle-group {
+            margin: 10px 0;
+        }
+        .toggle-label {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .toggle-label input {
+            margin-right: 8px;
+        }
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="loading">Loading 3D Model...</div>
+        <div id="canvas-container"></div>
+
+        <div id="info-panel">
+            <h1>Apartment E.1.5.47</h1>
+            <p><strong>Floor:</strong> 5</p>
+            <p><strong>Total Area:</strong> <span id="total-area">79.32</span> m²</p>
+            <p><strong>Ceiling Height:</strong> <span id="ceiling-height">2.8</span> m</p>
+
+            <div class="room-list" id="room-list">
+                <!-- Rooms will be populated here -->
+            </div>
+        </div>
+
+        <div id="controls">
+            <button class="control-btn" onclick="resetCamera()">Reset View</button>
+            <button class="control-btn" onclick="toggleView()">Toggle View</button>
+            <div class="toggle-group">
+                <label class="toggle-label">
+                    <input type="checkbox" id="show-walls" checked onchange="toggleWalls()">
+                    <span>Show Walls</span>
+                </label>
+                <label class="toggle-label">
+                    <input type="checkbox" id="show-labels" checked onchange="toggleLabels()">
+                    <span>Show Labels</span>
+                </label>
+                <label class="toggle-label">
+                    <input type="checkbox" id="show-fixtures" checked onchange="toggleFixtures()">
+                    <span>Show Fixtures</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+        let scene, camera, renderer, labelRenderer, controls;
+        let apartmentData;
+        let roomMeshes = [];
+        let wallMeshes = [];
+        let labelObjects = [];
+        let fixtureMeshes = [];
+        let isTopView = false;
+
+        // Room type colors
+        const roomColors = {
+            'living': 0x4A90E2,
+            'bedroom': 0x7ED321,
+            'kitchen': 0xF5A623,
+            'bathroom': 0x50E3C2,
+            'corridor': 0xB8E986,
+            'balcony': 0x9013FE
+        };
+
+        async function init() {
+            // Load apartment data
+            const response = await fetch('apartment-data.json');
+            apartmentData = await response.json();
+
+            // Setup scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0xf0f0f0);
+            scene.fog = new THREE.Fog(0xf0f0f0, 10, 50);
+
+            // Setup camera
+            camera = new THREE.PerspectiveCamera(
+                60,
+                window.innerWidth / window.innerHeight,
+                0.1,
+                1000
+            );
+            camera.position.set(8, 12, 8);
+            camera.lookAt(4.5, 0, 5);
+
+            // Setup renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+            // Setup label renderer
+            labelRenderer = new CSS2DRenderer();
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+            labelRenderer.domElement.style.position = 'absolute';
+            labelRenderer.domElement.style.top = '0px';
+            labelRenderer.domElement.style.pointerEvents = 'none';
+            document.getElementById('canvas-container').appendChild(labelRenderer.domElement);
+
+            // Setup controls
+            controls = new OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.minDistance = 2;
+            controls.maxDistance = 30;
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 20, 10);
+            directionalLight.castShadow = true;
+            directionalLight.shadow.camera.left = -15;
+            directionalLight.shadow.camera.right = 15;
+            directionalLight.shadow.camera.top = 15;
+            directionalLight.shadow.camera.bottom = -15;
+            scene.add(directionalLight);
+
+            // Build apartment
+            buildApartment();
+
+            // Populate room list
+            populateRoomList();
+
+            // Hide loading
+            document.getElementById('loading').style.display = 'none';
+
+            // Start animation
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', onWindowResize);
+        }
+
+        function buildApartment() {
+            // Build floor
+            const floorGeometry = new THREE.PlaneGeometry(12, 12);
+            const floorMaterial = new THREE.MeshLambertMaterial({
+                color: 0xcccccc,
+                side: THREE.DoubleSide
+            });
+            const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+            floor.rotation.x = -Math.PI / 2;
+            floor.position.set(4.5, 0, 5);
+            floor.receiveShadow = true;
+            scene.add(floor);
+
+            // Build rooms
+            apartmentData.rooms.forEach(room => {
+                buildRoom(room);
+            });
+
+            // Build walls
+            buildWalls();
+
+            // Add grid helper
+            const gridHelper = new THREE.GridHelper(20, 20, 0x888888, 0xcccccc);
+            gridHelper.position.y = 0;
+            scene.add(gridHelper);
+        }
+
+        function buildRoom(room) {
+            if (room.vertices.length < 3) return;
+
+            // Create room floor shape
+            const shape = new THREE.Shape();
+            shape.moveTo(room.vertices[0][0], room.vertices[0][1]);
+            for (let i = 1; i < room.vertices.length; i++) {
+                shape.lineTo(room.vertices[i][0], room.vertices[i][1]);
+            }
+            shape.lineTo(room.vertices[0][0], room.vertices[0][1]);
+
+            // Extrude floor slightly
+            const extrudeSettings = {
+                depth: 0.05,
+                bevelEnabled: false
+            };
+            const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+
+            const color = roomColors[room.type] || 0x888888;
+            const material = new THREE.MeshLambertMaterial({
+                color: color,
+                transparent: true,
+                opacity: 0.7
+            });
+
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.rotation.x = -Math.PI / 2;
+            mesh.position.y = 0.01;
+            mesh.receiveShadow = true;
+            mesh.userData = { room: room };
+            roomMeshes.push(mesh);
+            scene.add(mesh);
+
+            // Add room label
+            const centerX = room.vertices.reduce((sum, v) => sum + v[0], 0) / room.vertices.length;
+            const centerY = room.vertices.reduce((sum, v) => sum + v[1], 0) / room.vertices.length;
+
+            const labelDiv = document.createElement('div');
+            labelDiv.className = 'room-label';
+            labelDiv.textContent = `${room.name}\n${room.area}m²`;
+            labelDiv.style.color = '#333';
+            labelDiv.style.fontSize = '12px';
+            labelDiv.style.fontWeight = 'bold';
+            labelDiv.style.backgroundColor = 'rgba(255, 255, 255, 0.8)';
+            labelDiv.style.padding = '4px 8px';
+            labelDiv.style.borderRadius = '4px';
+            labelDiv.style.textAlign = 'center';
+            labelDiv.style.whiteSpace = 'pre';
+
+            const label = new CSS2DObject(labelDiv);
+            label.position.set(centerX, 0.5, centerY);
+            labelObjects.push(label);
+            scene.add(label);
+        }
+
+        function buildWalls() {
+            const wallHeight = apartmentData.ceilingHeight;
+            const wallThickness = 0.15;
+
+            // Build interior walls based on room boundaries
+            apartmentData.rooms.forEach(room => {
+                if (room.vertices.length < 2) return;
+
+                for (let i = 0; i < room.vertices.length; i++) {
+                    const v1 = room.vertices[i];
+                    const v2 = room.vertices[(i + 1) % room.vertices.length];
+
+                    const dx = v2[0] - v1[0];
+                    const dy = v2[1] - v1[1];
+                    const length = Math.sqrt(dx * dx + dy * dy);
+                    const angle = Math.atan2(dy, dx);
+
+                    const wallGeometry = new THREE.BoxGeometry(length, wallHeight, wallThickness);
+                    const wallMaterial = new THREE.MeshLambertMaterial({
+                        color: 0xdddddd,
+                        transparent: true,
+                        opacity: 0.9
+                    });
+
+                    const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+                    wall.position.set(
+                        v1[0] + dx / 2,
+                        wallHeight / 2,
+                        v1[1] + dy / 2
+                    );
+                    wall.rotation.y = -angle;
+                    wall.castShadow = true;
+                    wall.receiveShadow = true;
+                    wallMeshes.push(wall);
+                    scene.add(wall);
+                }
+            });
+
+            // Build exterior walls
+            apartmentData.walls.forEach(wallData => {
+                wallData.segments.forEach(segment => {
+                    const start = segment.start;
+                    const end = segment.end;
+
+                    const dx = end[0] - start[0];
+                    const dy = end[1] - start[1];
+                    const length = Math.sqrt(dx * dx + dy * dy);
+                    const angle = Math.atan2(dy, dx);
+
+                    const wallGeometry = new THREE.BoxGeometry(length, wallHeight, wallData.thickness);
+                    const wallMaterial = new THREE.MeshLambertMaterial({
+                        color: 0x999999
+                    });
+
+                    const wall = new THREE.Mesh(wallGeometry, wallMaterial);
+                    wall.position.set(
+                        start[0] + dx / 2,
+                        wallHeight / 2,
+                        start[1] + dy / 2
+                    );
+                    wall.rotation.y = -angle;
+                    wall.castShadow = true;
+                    wall.receiveShadow = true;
+                    wallMeshes.push(wall);
+                    scene.add(wall);
+                });
+            });
+
+            // Add windows
+            apartmentData.windows.forEach(window => {
+                const windowGeometry = new THREE.BoxGeometry(window.width, window.height, 0.05);
+                const windowMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x88ccff,
+                    transparent: true,
+                    opacity: 0.3,
+                    shininess: 100
+                });
+                const windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
+                windowMesh.position.set(window.position[0], 1.5, window.position[1]);
+                scene.add(windowMesh);
+            });
+        }
+
+        function populateRoomList() {
+            const roomList = document.getElementById('room-list');
+            apartmentData.rooms.forEach((room, index) => {
+                const color = roomColors[room.type] || 0x888888;
+                const colorHex = '#' + color.toString(16).padStart(6, '0');
+
+                const roomItem = document.createElement('div');
+                roomItem.className = 'room-item';
+                roomItem.innerHTML = `
+                    <div style="display: flex; align-items: center;">
+                        <div class="room-color" style="background-color: ${colorHex}"></div>
+                        <span class="room-name">${room.name}</span>
+                    </div>
+                    <span class="room-area">${room.area}m²</span>
+                `;
+                roomItem.onclick = () => focusOnRoom(index);
+                roomList.appendChild(roomItem);
+            });
+        }
+
+        function focusOnRoom(index) {
+            const room = apartmentData.rooms[index];
+            const centerX = room.vertices.reduce((sum, v) => sum + v[0], 0) / room.vertices.length;
+            const centerY = room.vertices.reduce((sum, v) => sum + v[1], 0) / room.vertices.length;
+
+            camera.position.set(centerX, 6, centerY + 4);
+            controls.target.set(centerX, 0, centerY);
+            controls.update();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+            labelRenderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // Global functions for controls
+        window.resetCamera = function() {
+            camera.position.set(8, 12, 8);
+            controls.target.set(4.5, 0, 5);
+            controls.update();
+            isTopView = false;
+        };
+
+        window.toggleView = function() {
+            if (!isTopView) {
+                camera.position.set(4.5, 15, 5);
+                controls.target.set(4.5, 0, 5);
+            } else {
+                camera.position.set(8, 12, 8);
+                controls.target.set(4.5, 0, 5);
+            }
+            controls.update();
+            isTopView = !isTopView;
+        };
+
+        window.toggleWalls = function() {
+            const show = document.getElementById('show-walls').checked;
+            wallMeshes.forEach(wall => {
+                wall.visible = show;
+            });
+        };
+
+        window.toggleLabels = function() {
+            const show = document.getElementById('show-labels').checked;
+            labelObjects.forEach(label => {
+                label.visible = show;
+            });
+        };
+
+        window.toggleFixtures = function() {
+            const show = document.getElementById('show-fixtures').checked;
+            fixtureMeshes.forEach(fixture => {
+                fixture.visible = show;
+            });
+        };
+
+        // Initialize
+        init();
+    </script>
+</body>
+</html>
