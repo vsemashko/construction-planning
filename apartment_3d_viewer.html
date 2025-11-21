@@ -481,27 +481,6 @@
             autoRotate = e.target.checked;
         });
 
-        // Animation loop
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // Auto rotate
-            if (autoRotate && apartmentModel) {
-                apartmentModel.rotation.y += 0.003;
-            }
-
-            controls.update();
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
         // Add some ambient particles for visual interest
         const particleGeometry = new THREE.BufferGeometry();
         const particleCount = 200;
@@ -522,16 +501,29 @@
         const particles = new THREE.Points(particleGeometry, particleMaterial);
         scene.add(particles);
 
-        // Animate particles
-        function animateParticles() {
-            particles.rotation.y += 0.0002;
-        }
-
-        const originalAnimate = animate;
+        // Animation loop
         function animate() {
-            originalAnimate();
-            animateParticles();
+            requestAnimationFrame(animate);
+
+            // Auto rotate
+            if (autoRotate && apartmentModel) {
+                apartmentModel.rotation.y += 0.003;
+            }
+
+            // Animate particles
+            particles.rotation.y += 0.0002;
+
+            controls.update();
+            renderer.render(scene, camera);
         }
+        animate();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
     </script>
 </body>
 </html>
